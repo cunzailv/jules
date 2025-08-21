@@ -12,9 +12,31 @@ h1 {
     margin: 20px 0;
 }
 
-.score-container {
-    font-size: 24px;
-    margin-bottom: 20px;
+.scores-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.score-box {
+    background: #bbada0;
+    padding: 10px 25px;
+    border-radius: 3px;
+    text-align: center;
+    color: #eee4da;
+    font-weight: bold;
+}
+
+.score-box div:first-child {
+    font-size: 13px;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.score-box div:last-child {
+    font-size: 25px;
+    line-height: 1;
+    color: white;
 }
 
 .game-container {
@@ -64,7 +86,37 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.1s ease-in-out;
+    transition: left 0.1s ease-in-out, top 0.1s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.tile-new {
+    animation: appear 0.2s ease-in-out;
+}
+
+.tile-merged .tile-inner {
+    animation: pop 0.2s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes appear {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .game-over-message {

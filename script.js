@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartButtonGameOver = document.getElementById('restart-button-gameover');
     const themeButton = document.getElementById('theme-button');
     const shareButton = document.getElementById('share-button');
+    const leaderboardButton = document.getElementById('leaderboard-button');
+    const leaderboardModal = document.getElementById('leaderboard-modal');
+    const modalCloseButton = document.getElementById('modal-close-button');
     const gridSize = 4;
     let grid;
     let score;
@@ -73,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
         restartButtonHeader.addEventListener('click', startGame);
         restartButtonGameOver.addEventListener('click', startGame);
         shareButton.addEventListener('click', shareScore);
+        leaderboardButton.addEventListener('click', openLeaderboard);
+        modalCloseButton.addEventListener('click', closeLeaderboard);
         setupTouchControls();
     }
 
@@ -330,6 +335,39 @@ document.addEventListener('DOMContentLoaded', () => {
             // Fallback for browsers that don't support Web Share API
             alert("Your browser does not support the Share API. You can manually copy the link to share!");
         }
+    }
+
+    function openLeaderboard() {
+        renderLeaderboard();
+        leaderboardModal.style.display = 'flex';
+    }
+
+    function closeLeaderboard() {
+        leaderboardModal.style.display = 'none';
+    }
+
+    function renderLeaderboard() {
+        const leaderboardTableBody = document.querySelector('#leaderboard-table tbody');
+        leaderboardTableBody.innerHTML = ''; // Clear existing rows
+
+        // Placeholder data
+        const placeholderData = [
+            { rank: 1, name: 'Alice', score: 15940 },
+            { rank: 2, name: 'Bob', score: 12870 },
+            { rank: 3, name: 'Charlie', score: 9800 },
+            { rank: 4, name: 'David', score: 7530 },
+            { rank: 5, name: 'Eve', score: 5120 },
+        ];
+
+        placeholderData.forEach(entry => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${entry.rank}</td>
+                <td>${entry.name}</td>
+                <td>${entry.score}</td>
+            `;
+            leaderboardTableBody.appendChild(row);
+        });
     }
 
     init();

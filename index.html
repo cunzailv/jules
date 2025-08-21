@@ -12,6 +12,7 @@
         <div class="header-buttons">
             <button id="restart-button-header" class="header-button">New Game</button>
             <button id="theme-button" class="header-button">Theme</button>
+            <button id="leaderboard-button" class="header-button">Leaderboard</button>
         </div>
     </div>
     <div class="scores-container">
@@ -42,6 +43,31 @@
     <p class="game-instructions">
         Use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!
     </p>
+
+    <div class="ad-placeholder">
+        Ad Placeholder
+    </div>
+
     <script src="script.js"></script>
+
+    <div id="leaderboard-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="modal-close-button" class="modal-close-button">&times;</span>
+            <h2>Leaderboard</h2>
+            <table id="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Placeholder data will be inserted here by JS -->
+                </tbody>
+            </table>
+            <p class="api-note">Note: This is placeholder data. A backend API is needed to implement a real-time leaderboard.</p>
+        </div>
+    </div>
 </body>
 </html>

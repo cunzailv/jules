@@ -7,7 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>2048</h1>
+    <div class="header">
+        <h1>2048</h1>
+        <div class="header-buttons">
+            <button id="restart-button-header" class="header-button">New Game</button>
+            <button id="theme-button" class="header-button">Theme</button>
+        </div>
+    </div>
     <div class="scores-container">
         <div class="score-box">
             <div>SCORE</div>
@@ -27,8 +33,11 @@
         </div>
     </div>
     <div class="game-over-message" id="game-over-message">
-        Game Over!
-        <button id="restart-button">Try Again</button>
+        <div class="game-over-text">Game Over!</div>
+        <div class="game-over-buttons">
+            <button id="share-button" class="header-button">Share</button>
+            <button id="restart-button-gameover" class="header-button">Try Again</button>
+        </div>
     </div>
     <p class="game-instructions">
         Use your arrow keys to move the tiles. When two tiles with the same number touch, they merge into one!

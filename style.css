@@ -1,15 +1,90 @@
+:root {
+  --color-bg-body: #faf8ef;
+  --color-text-primary: #776e65;
+  --color-text-light: #f9f6f2;
+  --color-text-dark: #776e65;
+  --color-bg-header-button: #8f7a66;
+  --color-bg-score-box: #bbada0;
+  --color-bg-grid: #bbada0;
+  --color-bg-grid-cell: #cdc1b4;
+  --color-bg-game-over: rgba(238, 228, 218, 0.73);
+
+  --color-tile-default-bg: #eee4da;
+  --color-tile-default-text: #776e65;
+  --color-tile-2-bg: #eee4da; --color-tile-2-text: #776e65;
+  --color-tile-4-bg: #ede0c8; --color-tile-4-text: #776e65;
+  --color-tile-8-bg: #f2b179; --color-tile-8-text: #f9f6f2;
+  --color-tile-16-bg: #f59563; --color-tile-16-text: #f9f6f2;
+  --color-tile-32-bg: #f67c5f; --color-tile-32-text: #f9f6f2;
+  --color-tile-64-bg: #f65e3b; --color-tile-64-text: #f9f6f2;
+  --color-tile-128-bg: #edcf72; --color-tile-128-text: #f9f6f2;
+  --color-tile-256-bg: #edcc61; --color-tile-256-text: #f9f6f2;
+  --color-tile-512-bg: #edc850; --color-tile-512-text: #f9f6f2;
+  --color-tile-1024-bg: #edc53f; --color-tile-1024-text: #f9f6f2;
+  --color-tile-2048-bg: #edc22e; --color-tile-2048-text: #f9f6f2;
+}
+
+body[data-theme="dark"] {
+  --color-bg-body: #121212;
+  --color-text-primary: #e0e0e0;
+  --color-text-light: #faf8ef;
+  --color-text-dark: #e0e0e0;
+  --color-bg-header-button: #5a5a5a;
+  --color-bg-score-box: #333333;
+  --color-bg-grid: #212121;
+  --color-bg-grid-cell: #424242;
+  --color-bg-game-over: rgba(33, 33, 33, 0.8);
+
+  --color-tile-2-bg: #4a4a4a; --color-tile-2-text: #f0f0f0;
+  --color-tile-4-bg: #5a5a5a; --color-tile-4-text: #f0f0f0;
+  --color-tile-8-bg: #b5651d; --color-tile-8-text: #f9f6f2;
+  --color-tile-16-bg: #b33a3a; --color-tile-16-text: #f9f6f2;
+  --color-tile-32-bg: #9b2c2c; --color-tile-32-text: #f9f6f2;
+  --color-tile-64-bg: #8c1d1d; --color-tile-64-text: #f9f6f2;
+  --color-tile-128-bg: #b5851d; --color-tile-128-text: #f9f6f2;
+  --color-tile-256-bg: #b5951d; --color-tile-256-text: #f9f6f2;
+  --color-tile-512-bg: #b5a51d; --color-tile-512-text: #f9f6f2;
+  --color-tile-1024-bg: #b5b51d; --color-tile-1024-text: #f9f6f2;
+  --color-tile-2048-bg: #c1c11f; --color-tile-2048-text: #f9f6f2;
+}
+
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #faf8ef;
-    color: #776e65;
+    background-color: var(--color-bg-body);
+    color: var(--color-text-primary);
     text-align: center;
     margin: 0;
     padding: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 h1 {
     font-size: 80px;
-    margin: 20px 0;
+    margin: 0;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.header-button {
+    background-color: var(--color-bg-header-button);
+    color: var(--color-text-light);
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .scores-container {
@@ -19,11 +94,11 @@ h1 {
 }
 
 .score-box {
-    background: #bbada0;
+    background: var(--color-bg-score-box);
     padding: 10px 25px;
     border-radius: 3px;
     text-align: center;
-    color: #eee4da;
+    color: #eee4da; /* This is a lighter text on the score box bg, might not need a var */
     font-weight: bold;
 }
 
@@ -36,15 +111,15 @@ h1 {
 .score-box div:last-child {
     font-size: 25px;
     line-height: 1;
-    color: white;
+    color: var(--color-text-light);
 }
 
 .game-container {
     position: relative;
     width: 500px;
     height: 500px;
-    margin: 0 auto;
-    background-color: #bbada0;
+    margin: 20px auto;
+    background-color: var(--color-bg-grid);
     border-radius: 6px;
     padding: 15px;
     box-sizing: border-box;
@@ -63,7 +138,7 @@ h1 {
 }
 
 .grid-cell {
-    background-color: #cdc1b4;
+    background-color: var(--color-bg-grid-cell);
     border-radius: 3px;
 }
 
@@ -79,14 +154,14 @@ h1 {
     position: absolute;
     width: 107.5px;
     height: 107.5px;
-    background-color: #eee4da;
+    background-color: var(--color-tile-default-bg);
     border-radius: 3px;
     font-size: 55px;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: left 0.1s ease-in-out, top 0.1s ease-in-out, transform 0.2s ease-in-out;
+    transition: left 0.1s ease-in-out, top 0.1s ease-in-out, transform 0.2s ease-in-out, background-color 0.3s;
 }
 
 .tile-new {
@@ -126,26 +201,23 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(238, 228, 218, 0.73);
+    background-color: var(--color-bg-game-over);
     z-index: 10;
     font-size: 60px;
     font-weight: bold;
-    color: #776e65;
+    color: var(--color-text-dark);
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-#restart-button {
+.game-over-buttons {
+    display: flex;
+    gap: 8px;
     margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 20px;
-    background-color: #8f7a66;
-    color: #f9f6f2;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
 }
+
+/* This ID is now styled by the .header-button class, so the dedicated rule is removed. */
 
 .game-instructions {
     margin-top: 20px;
@@ -153,14 +225,14 @@ h1 {
 }
 
 /* Tile Colors */
-.tile.tile-2 { background: #eee4da; color: #776e65; }
-.tile.tile-4 { background: #ede0c8; color: #776e65; }
-.tile.tile-8 { background: #f2b179; color: #f9f6f2; }
-.tile.tile-16 { background: #f59563; color: #f9f6f2; }
-.tile.tile-32 { background: #f67c5f; color: #f9f6f2; }
-.tile.tile-64 { background: #f65e3b; color: #f9f6f2; }
-.tile.tile-128 { background: #edcf72; color: #f9f6f2; }
-.tile.tile-256 { background: #edcc61; color: #f9f6f2; }
-.tile.tile-512 { background: #edc850; color: #f9f6f2; }
-.tile.tile-1024 { background: #edc53f; color: #f9f6f2; }
-.tile.tile-2048 { background: #edc22e; color: #f9f6f2; }
+.tile.tile-2 { background-color: var(--color-tile-2-bg); color: var(--color-tile-2-text); }
+.tile.tile-4 { background-color: var(--color-tile-4-bg); color: var(--color-tile-4-text); }
+.tile.tile-8 { background-color: var(--color-tile-8-bg); color: var(--color-tile-8-text); }
+.tile.tile-16 { background-color: var(--color-tile-16-bg); color: var(--color-tile-16-text); }
+.tile.tile-32 { background-color: var(--color-tile-32-bg); color: var(--color-tile-32-text); }
+.tile.tile-64 { background-color: var(--color-tile-64-bg); color: var(--color-tile-64-text); }
+.tile.tile-128 { background-color: var(--color-tile-128-bg); color: var(--color-tile-128-text); }
+.tile.tile-256 { background-color: var(--color-tile-256-bg); color: var(--color-tile-256-text); }
+.tile.tile-512 { background-color: var(--color-tile-512-bg); color: var(--color-tile-512-text); }
+.tile.tile-1024 { background-color: var(--color-tile-1024-bg); color: var(--color-tile-1024-text); }
+.tile.tile-2048 { background-color: var(--color-tile-2048-bg); color: var(--color-tile-2048-text); }

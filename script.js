@@ -4,7 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreElement = document.getElementById('score');
     const bestScoreElement = document.getElementById('best-score');
     const gameOverMessage = document.getElementById('game-over-message');
-    const restartButton = document.getElementById('restart-button');
+    const restartButtonHeader = document.getElementById('restart-button-header');
+    const restartButtonGameOver = document.getElementById('restart-button-gameover');
+    const themeButton = document.getElementById('theme-button');
+    const shareButton = document.getElementById('share-button');
     const gridSize = 4;
     let grid;
     let score;
@@ -63,10 +66,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function init() {
+        setupTheme();
         setupGrid();
         startGame();
         document.addEventListener('keydown', handleInput);
-        restartButton.addEventListener('click', startGame);
+        restartButtonHeader.addEventListener('click', startGame);
+        restartButtonGameOver.addEventListener('click', startGame);
+        shareButton.addEventListener('click', shareScore);
         setupTouchControls();
     }
 
@@ -288,6 +294,41 @@ document.addEventListener('DOMContentLoaded', () => {
                     handleInput({ key: `Arrow${direction.charAt(0).toUpperCase() + direction.slice(1)}` });
                 }
             }
+        }
+    }
+
+    function setupTheme() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.setAttribute('data-theme', savedTheme);
+        }
+
+        themeButton.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.body.removeAttribute('data-theme');
+                localStorage.removeItem('theme');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    }
+
+    function shareScore() {
+        const shareData = {
+            title: '2048 Game',
+            text: `I scored ${score} in 2048! Can you beat it?`,
+            url: window.location.href
+        };
+
+        if (navigator.share && navigator.canShare(shareData)) {
+            navigator.share(shareData)
+                .then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error));
+        } else {
+            // Fallback for browsers that don't support Web Share API
+            alert("Your browser does not support the Share API. You can manually copy the link to share!");
         }
     }
 

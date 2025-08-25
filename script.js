@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const leaderboardButton = document.getElementById('leaderboard-button');
     const leaderboardModal = document.getElementById('leaderboard-modal');
     const modalCloseButton = document.getElementById('modal-close-button');
+    const undoButton = document.getElementById('undo-button');
     const gridSize = 4;
     let grid;
     let score;
     let bestScore;
     let isGameOver;
     let isMoving = false;
+    let previousState = null;
 
     class Tile {
         constructor(value, row, col) {
@@ -78,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shareButton.addEventListener('click', shareScore);
         leaderboardButton.addEventListener('click', openLeaderboard);
         modalCloseButton.addEventListener('click', closeLeaderboard);
+        undoButton.addEventListener('click', undo);
         setupTouchControls();
     }
 
@@ -87,6 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         bestScore = localStorage.getItem('bestScore') || 0;
         bestScoreElement.textContent = bestScore;
         isGameOver = false;
+        previousState = null;
+        undoButton.setAttribute('disabled', true);
         isMoving = false;
         updateScore(0, true);
         gameOverMessage.style.display = 'none';
@@ -157,6 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function move(direction) {
+        saveState();
+
         let hasChanged = false;
         let tilesToDestroy = [];
 
@@ -368,6 +375,48 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             leaderboardTableBody.appendChild(row);
         });
+    }
+
+    function cloneGridValues() {
+        return grid.map(row => row.map(tile => (tile ? tile.value : null)));
+    }
+
+    function saveState() {
+        previousState = {
+            grid: cloneGridValues(),
+            score: score,
+        };
+        undoButton.removeAttribute('disabled');
+    }
+
+    function undo() {
+        if (isMoving || previousState === null) return;
+
+        isMoving = true;
+
+        // Restore score
+        score = previousState.score;
+        updateScore(0, true); // Update display without adding points
+
+        // Clear current board
+        tileContainer.innerHTML = '';
+        grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
+
+        // Rebuild board from previous state
+        previousState.grid.forEach((row, r) => {
+            row.forEach((value, c) => {
+                if (value) {
+                    grid[r][c] = new Tile(value, r, c);
+                }
+            });
+        });
+
+        // Expose the new grid for testing
+        window.grid = grid;
+
+        previousState = null;
+        undoButton.setAttribute('disabled', true);
+        isMoving = false;
     }
 
     init();
